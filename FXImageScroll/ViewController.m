@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "FXImageWheel.h"
+#import "FXImageCollectionView.h"
 
 @interface ViewController ()
 
@@ -16,12 +18,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self setupView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setupView{
+    
+    NSArray * arr = [NSArray arrayWithObjects:@"1.jpg",@"2.jpg",@"3.jpg",@"4.jpg",@"5.jpg",nil];
+    
+    //1.正常改变scrollView的ContentOffset
+    FXImageWheel * ff = [[FXImageWheel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 250) withDataArray:arr];
+    [self.view addSubview:ff];
+    ff.ClickIndexBlock = ^(NSInteger index){
+        
+        NSLog(@"点击了：%ld",index);
+    };
+    
+    //2.使用collectionView，改变数组顺序
+    FXImageCollectionView * imgColl = [[FXImageCollectionView alloc] initWithFrame:CGRectMake(0, 320, self.view.frame.size.width, 200) withDataArray:arr];
+    [self.view addSubview:imgColl];
 }
+
 
 @end
+
+
